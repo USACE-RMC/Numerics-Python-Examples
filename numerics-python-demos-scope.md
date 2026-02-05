@@ -46,7 +46,10 @@ numerics-python-examples/
 │   ├── 07_statistics.ipynb
 │   ├── 08_time_series.ipynb
 │   └── 09_machine_learning.ipynb
+<<<<<<< HEAD
 |   └── 10_linear_models.ipynb
+=======
+>>>>>>> a3b375ad17992471e3d062cd998776ba21cf2ea9
 │
 ├── examples/
 │   ├── flood_frequency_analysis.py    # Real-world hydrology example
