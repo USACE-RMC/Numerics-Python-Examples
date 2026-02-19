@@ -1,141 +1,63 @@
-# MOVE HELPER FUNCTIONS FROM TEST_PYNUMERICS HERE
+"""Helper functions used by notebooks in this repository."""
+
+import math
 
 import pandas as pd
-import math
 from System import Array, Double
 
-"""
-Helper functions to compare Numerics results to Python package results.
-Authors:
-     Sadie Niblett, USACE Risk Management Center, sadie.s.niblett@usace.army.mil
-"""
 
-def convert_to_dotnet_array(pythonList):
-    """
-    Helper function to convert a Python list to a .NET array of doubles.
-    Args:
-        python_list: Python list of float values
-    """
-    dotnetArray = Array.CreateInstance(float, len(pythonList))
-    for i, val in enumerate(pythonList):
-        dotnetArray[i] = float(val)
-    return dotnetArray
+def convert_to_dotnet_array(python_list):
+    """Convert a Python list into a 1D .NET array of doubles."""
+    dotnet_array = Array.CreateInstance(float, len(python_list))
+    for i, val in enumerate(python_list):
+        dotnet_array[i] = float(val)
+    return dotnet_array
+
 
 def convert_to_dotnet_2d_array(matrix):
-    """Convert NumPy matrix to .NET 2D array.
-    Args:
-        matrix: 2D NumPy array"""
+    """Convert a 2D NumPy array into a .NET 2D array of doubles."""
     rows, cols = matrix.shape
     net_array = Array.CreateInstance(Double, rows, cols)
     for i in range(rows):
         for j in range(cols):
             net_array[i, j] = float(matrix[i, j])
     return net_array
-    
-def assert_within_tolerance_pct(expected, actual, names, tolerancePct=0.05):
-    """
-    Helper function to assert that actual values is within a certain percentage tolerance of expected values.
-    Args:
-        expected: List of expected values (floats)
-        actual: List of actual values (floats)
-        name: List of names of the statistic being tested (for error message)
-        tolerance_pct: Tolerance percentage (default 0.05 for 5%)
-    """
-    for i in range(len(expected)):
-        tolerance = abs(expected[i] * tolerancePct)
 
-        if abs(actual[i] - expected[i]) > tolerance:
-            raise AssertionError(
-                f"{names[i]}: Expected {expected[i]} ± {tolerance}, got {actual[i]}"
-                )
 
-def assert_within_tolerance(expected, actual, names, tolerance=0.05):
-    """
-    Helper function to assert that actual values is within a certain tolerance of expected values.
-    Args:
-        expected: List of expected values (floats)
-        actual: List of actual values (floats)
-        name: List of names of the statistic being tested (for error message)
-        tolerance: Tolerance  (default 0.05)
-    """
-    for i in range(len(expected)):
-        if abs(actual[i] - expected[i]) > tolerance:
-            raise AssertionError(
-                f"{names[i]}: Expected {expected[i]} ± {tolerance}, got {actual[i]}"
-                )
-
-def assert_within_tolerance_singular(expected, actual, name, tolerance=0.05):
-    """
-    Helper function to assert that actual value is within a certain tolerance of expected value.
-    Args:
-        expected: Expected value (float)
-        actual: Actual value (float)
-        name: Name of the statistic being tested (for error message)
-        tolerance: Tolerance  (default 0.05)
-    """
-    if abs(actual - expected) > tolerance:
-         raise AssertionError(
-            f"{name}: Expected {expected} ± {tolerance}, got {actual}"
-            )
-
-def create_comparison_table(numericsResults, comparisonPackage, comparisonResults, parameterNames, numericsTime=float('nan'), comparisonTime=float('nan') ):
-    """
-    Helper function to create a comparison table between Numerics and comparison package results.
-    Args:
-        numericsResults: Array of results from Numerics
-        comparisonPackage: Name of comparison package (for table formating)
-        comparisonResults: Array of results from comparison package
-        parameterNames: List of parameter names
-        numericsTime: Execution time for Numerics (default nan for hard coded numerical tests)
-        comparisonTime: Execution time for comparison package (default nan for hard coded numerical tests)
-    Returns: 
-        pandas DataFrame with comparison results
-    """
+def create_comparison_table(
+    numerics_results,
+    comparison_package,
+    comparison_results,
+    parameter_names,
+    numerics_time=float("nan"),
+    comparison_time=float("nan"),
+):
+    """Create a comparison table between Numerics and another package."""
     table = []
-    for i, paramName in enumerate(parameterNames):
-        pct_diff = ((numericsResults[i] - comparisonResults[i]) / comparisonResults[i] * 100) if comparisonResults[i] != 0 else 0
-        table.append({'Parameter': paramName,
-                        'Numerics Result': numericsResults[i],
-                        f'{comparisonPackage} Result': comparisonResults[i],
-                        'Difference': f'{pct_diff:.4f}%'
-                        })
+    for i, param_name in enumerate(parameter_names):
+        pct_diff = (
+            (numerics_results[i] - comparison_results[i]) / comparison_results[i] * 100
+            if comparison_results[i] != 0
+            else 0
+        )
+        table.append(
+            {
+                "Parameter": param_name,
+                "Numerics Result": numerics_results[i],
+                f"{comparison_package} Result": comparison_results[i],
+                "Difference": f"{pct_diff:.4f}%",
+            }
+        )
 
-    if not math.isnan(numericsTime) and not math.isnan(comparisonTime):
-        timeDiff = (numericsTime - comparisonTime) if comparisonTime != 0 else 0 
-        table.append({'Parameter': 'Runtime (secs)',
-                    'Numerics Result': f'{numericsTime:.4f}',
-                    f'{comparisonPackage} Result': f'{comparisonTime:.4f}',
-                    'Difference': f'{timeDiff:.4f}'
-                    })
+    if not math.isnan(numerics_time) and not math.isnan(comparison_time):
+        time_diff = (numerics_time - comparison_time) if comparison_time != 0 else 0
+        table.append(
+            {
+                "Parameter": "Runtime (secs)",
+                "Numerics Result": f"{numerics_time:.4f}",
+                f"{comparison_package} Result": f"{comparison_time:.4f}",
+                "Difference": f"{time_diff:.4f}",
+            }
+        )
 
-    df = pd.DataFrame(table)
-    return df
-
-def create_singular_comparison(numericsResult, comparisonPackage, comparisonResult, parameterName, numericsTime=float('nan'), comparisonTime=float('nan') ):
-    """
-    Helper function to create a singular comparison table between Numerics and comparison package results.
-    Args:
-        numericsResult: Result from Numerics
-        comparisonPackage: Name of comparison package (for table formating)
-        comparisonResult: Result from comparison package
-        parameterName: Name of parameter
-        numericsTime: Execution time for Numerics (default nan for hard coded numerical tests)
-        comparisonTime: Execution time for comparison package (default nan for hard coded numerical tests) 
-    Returns:
-        pandas DataFrame with comparison results
-        """
-    pct_diff = ((numericsResult - comparisonResult) / comparisonResult * 100) if comparisonResult != 0 else 0
-    table = [{'Parameter': parameterName,
-                'Numerics Result': numericsResult,
-                f'{comparisonPackage} Result': comparisonResult,
-                'Difference': f'{pct_diff:.4f}%'
-                }]
-    if not math.isnan(numericsTime) and not math.isnan(comparisonTime):
-        timeDiff = (numericsTime - comparisonTime) if comparisonTime != 0 else 0 
-        table.append({'Parameter': 'Runtime (secs)',
-                    'Numerics Result': f'{numericsTime:.4f}',
-                    f'{comparisonPackage} Result': f'{comparisonTime:.4f}',
-                    'Difference': f'{timeDiff:.4f}'
-                    })
-    df = pd.DataFrame(table)
-    return df
+    return pd.DataFrame(table)
