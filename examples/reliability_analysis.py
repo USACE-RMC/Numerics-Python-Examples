@@ -1,4 +1,5 @@
-"""Reliability analysis demo using Monte Carlo simulation."""
+"""Reliability analysis demo using Monte Carlo simulation. Once this file runs you will have a popup window of graphs 
+and tables will be ouput to the terminal."""
 
 import math
 from pathlib import Path
@@ -39,9 +40,7 @@ def main(n_samples=100_000, seed=42):
     resistance_dist.Base = float(math.e)
     load_dist = Normal(380.0, 90.0)
 
-    resistance = np.array(
-        list(resistance_dist.GenerateRandomValues(int(n_samples), int(seed)))
-    )
+    resistance = np.array(list(resistance_dist.GenerateRandomValues(int(n_samples), int(seed))))
     load = np.array(list(load_dist.GenerateRandomValues(int(n_samples), int(seed + 1))))
 
     g = resistance - load

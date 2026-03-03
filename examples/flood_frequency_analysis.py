@@ -1,5 +1,5 @@
 """Flood frequency analysis demo using Numerics via PythonNet. Once this file runs you will have a popup window of graphs 
-and tables will be outputted to the terminal.
+and tables will be output to the terminal.
 """
 
 from pathlib import Path
@@ -43,8 +43,13 @@ def main():
             13400, 19200, 16900, 15500, 14500, 21900, 10400, 7460,
         ]
     )
-    net_data = Array[Double]([float(v) for v in peak_flows])
+    peak_flows_sorted = np.sort(peak_flows)
 
+    # Convert Python data to .NET
+    net_data = Array[Double]([float(v) for v in peak_flows])
+    net_data_sorted = Array[Double]([float(v) for v in peak_flows_sorted])
+
+    # Fit 3 different models
     ln = LogNormal()
     ln.Estimate(net_data, ParameterEstimationMethod.MaximumLikelihood)
 
@@ -58,7 +63,7 @@ def main():
 
     fit_rows = []
     for name, dist in models.items():
-        kstest = GoodnessOfFit.KolmogorovSmirnov(net_data, dist)
+        kstest = GoodnessOfFit.KolmogorovSmirnov(net_data_sorted, dist) # Needs sorted data
         fit_rows.append(
             {
                 "Model": name,

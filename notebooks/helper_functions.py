@@ -8,7 +8,7 @@ from System import Array, Double
 
 def convert_to_dotnet_array(python_list):
     """Convert a Python list into a 1D .NET array of doubles."""
-    dotnet_array = Array.CreateInstance(float, len(python_list))
+    dotnet_array = Array.CreateInstance(Double, len(python_list))
     for i, val in enumerate(python_list):
         dotnet_array[i] = float(val)
     return dotnet_array

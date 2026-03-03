@@ -1,6 +1,6 @@
 """Bayesian linear regression demo with Numerics DEMCzs.
 This file takes approximately 5 minutes to run. Once it is complete you will have a popup window of graphs 
-and tables will be outputted to the terminal.
+and tables will be output to the terminal.
 """
 
 from pathlib import Path
@@ -30,28 +30,29 @@ def main(seed=123):
     from Numerics.Sampling.MCMC import DEMCzs, LogLikelihood, MCMCResults
     from System.Collections.Generic import List
 
-    rng = np.random.default_rng(seed)
     x = np.linspace(0, 10, 80)
     true_a, true_b, true_sigma = 2.0, 1.4, 1.2
     y = true_a + true_b * x + np.asarray(Normal(0, true_sigma).GenerateRandomValues(len(x),seed))
-    # rng.normal(0.0, true_sigma, size=len(x))
 
     priors = List[IUnivariateDistribution]()
-    # Uninformative flat priors - we assume we know nothing
+    # Flat priors - we assume we know very little
     priors.Add(Uniform(-10, 10))
     priors.Add(Uniform(0, 5))
     priors.Add(Uniform(0.1, 5))
 
+    # Define likelihood
     def log_likelihood(params):
         a, b, sigma = params[0], params[1], params[2]
         residuals = y - (a + b * x)
         dist = Normal(0, sigma)
         return sum(dist.LogPDF(float(r)) for r in residuals)
 
+    # Run sampler
     sampler = DEMCzs(priors, LogLikelihood(log_likelihood))
     sampler.Sample()
     results = MCMCResults(sampler)
 
+    # Extract results
     a_stats = results.ParameterResults[0].SummaryStatistics
     b_stats = results.ParameterResults[1].SummaryStatistics
     s_stats = results.ParameterResults[2].SummaryStatistics
@@ -89,10 +90,12 @@ def main(seed=123):
     b_samples = np.array([chain[i].Values[1] for i in range(len(chain))], dtype=float)
     sigma_samples = np.array([chain[i].Values[2] for i in range(len(chain))], dtype=float)
 
-    # Posterior predictive mean fit and interval for y|x
-    y_hat_mean = a_stats.Mean + b_stats.Mean * x
-    y_hat_low = a_stats.LowerCI + b_stats.LowerCI * x
-    y_hat_up = a_stats.UpperCI + b_stats.UpperCI * x
+    # Mean-function credible band: E[y|x,theta] = a + b*x
+    # mu_draws[i,j] = a_i + b_i*x_j
+    mu_draws = a_samples[:, None] + b_samples[:, None] * x[None, :] # Model mean draws for every posterior sample at every x
+    y_hat_mean = mu_draws.mean(axis=0) # Average accross posterior draws for each x_j
+    y_hat_low, y_hat_up = np.quantile(mu_draws, [0.05, 0.95], axis=0) # 90% interval for each x_j
+
 
     fit_df = pd.DataFrame(
         {
@@ -145,8 +148,7 @@ def main(seed=123):
     axes[1, 1].set_ylabel("Density")
     axes[1, 1].legend()
     axes[1, 1].grid(True, alpha=0.3)
-
-    plt.tight_layout(rect=[0, 0, 1, 0.97])
+    
     plt.tight_layout()
     plt.show()
 
