@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the information below."
+type: software
+title: "Numerics-Python-Examples"
+version: 0.0.0
+repository-code: 
+date-released: "2026-03-30"
+license: BSD-3-Clause
+url: "https://github.com/USACE-RMC/Numerics-Python-Examples.git"
+abstract: >-
+  This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. 
+  The goal is to give practical, reproducible examples for distributions, MCMC, optimization, statistics, 
+  time series, machine learning, and linear models.
+keywords:
+  - numerics
+  - pythonnet
+  - MCMC
+  - optimization
+  - machine-learning
+  - sstatistics
+  - probability distributions
+authors:
+    - family-names: "Niblett"
+      given-names: "Sadie"
+      email: "sadie.s.niblett@usace.army.mil"
+      affiliation: "U.S. Army Corps of Engineers, Risk Management Center"
+      orcid: "https://orcid.org/0009-0008-8588-4816"
+    - family-names: "Gonzalez"
+      given-names: "Tiki"
+      email: "julian.t.gonzalez@usace.army.mil"
+      affiliation: "U.S. Army Corps of Engineers, Risk Management Center"
+      orcid: ""
+    - family-names: "Smith"
+      given-names: "C. Haden"
+      email: "cole.h.smith@usace.army.mil"
+      affiliation: "U.S. Army Corps of Engineers, Risk Management Center"
+      orcid: "https://orcid.org/0000-0002-4651-9890"
