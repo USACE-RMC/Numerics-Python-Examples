@@ -32,9 +32,6 @@ This repository contains Python notebooks that demonstrate the Numerics .NET lib
 3. Build Numerics and confirm the DLL path matches what the notebooks expect.
 4. Open notebooks in Jupyter or VS Code and run cells top to bottom.
 
-## Docs
-- `docs/api_cheatsheet.md` Quick mapping of common Numerics tasks to PythonNet calls.
-
 ## Notes
 - These notebooks compare Numerics to common Python libraries where relevant. When comparing MCMC chains, align warmup/thinning settings.
 - Many examples use synthetic data to keep results consistent and easy to interpret.
