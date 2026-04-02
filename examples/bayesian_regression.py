@@ -29,6 +29,21 @@ def main(seed=123):
     from Numerics.Distributions import IUnivariateDistribution, Normal, Uniform
     from Numerics.Sampling.MCMC import DEMCzs, LogLikelihood, MCMCResults
     from System.Collections.Generic import List
+    from System.Threading import ThreadPool
+    import os
+    
+    ''' NOTE FOR DEMO USERS:
+    When calling Numerics MCMC samplers from Python via pythonnet, the samplers'
+    internal parallel chains (Parallel.For) contend for Python's Global Interpreter
+    Lock (GIL). This makes parallel execution slower than sequential. Setting
+    max thread pool workers to 1 forces sequential execution and removes that
+    overhead. In pure C#, you can remove this line and parallelism will work as
+    intended. 
+
+    This is also why we set sampler.ParallelizeChains = False for every example.
+    It defaults to True, which works well in C#, but it slows the sampler down 
+    in Python'''
+    ThreadPool.SetMaxThreads(1, 1)  # (workerThreads, completionPortThreads)
 
     x = np.linspace(0, 10, 80)
     true_a, true_b, true_sigma = 2.0, 1.4, 1.2
@@ -49,6 +64,7 @@ def main(seed=123):
 
     # Run sampler
     sampler = DEMCzs(priors, LogLikelihood(log_likelihood))
+    sampler.ParallelizeChains = False
     sampler.Sample()
     results = MCMCResults(sampler)
 

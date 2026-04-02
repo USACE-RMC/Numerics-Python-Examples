@@ -1,10 +1,8 @@
 """Helper functions used by notebooks in this repository."""
 
 import math
-
 import pandas as pd
 from System import Array, Double
-
 
 def convert_to_dotnet_array(python_list):
     """Convert a Python list into a 1D .NET array of doubles."""
