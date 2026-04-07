@@ -109,7 +109,7 @@ def main(seed=123):
     # Mean-function credible band: E[y|x,theta] = a + b*x
     # mu_draws[i,j] = a_i + b_i*x_j
     mu_draws = a_samples[:, None] + b_samples[:, None] * x[None, :] # Model mean draws for every posterior sample at every x
-    y_hat_mean = mu_draws.mean(axis=0) # Average accross posterior draws for each x_j
+    y_hat_mean = mu_draws.mean(axis=0) # Average across posterior draws for each x_j
     y_hat_low, y_hat_up = np.quantile(mu_draws, [0.05, 0.95], axis=0) # 90% interval for each x_j
 
 
