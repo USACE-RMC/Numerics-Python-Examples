@@ -105,7 +105,7 @@ print(f"P(X < 120) = {dist.CDF(120):.4f}")
 - Goodness-of-fit tests (KS, Anderson-Darling, Chi-squared)
 - Plotting fitted vs empirical CDF
 - Bootstrap confidence intervals on parameters
-- Plotting positions (Weibull, Gringorten)
+- Plotting positions (Weibull)
 
 **Real-world context:** Flood frequency analysis - fitting annual peak flows
 
