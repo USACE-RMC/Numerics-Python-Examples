@@ -27,8 +27,8 @@ This repository contains Python notebooks that demonstrate the Numerics .NET lib
 - Numerics built and compiled locally. The resulting DLL path must match the path referenced in the notebooks — see Quick Start and/or notebook 00 for setup instructions.
 
 ## Quick Start
-The quick start will step through the creation of an active python environment, installing the notebook requirements & RMC-Numerics, and getting the methods ready to be used. For a more in depth walk through see notebook 00.
-**NOTE:** This set up is geared towards Windows users. For other operating systems see notebook 00.
+The quick start will step through the creation of an active python environment, installing the notebook requirements & RMC-Numerics, and getting the methods ready to be used. For a more in depth walk through see notebook 00.      
+**NOTE:** This set up is geared towards Windows users. For other operating systems see notebook 00.      
 
 1. Create and activate a virtual Python environment
 ```bash
