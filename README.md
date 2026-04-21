@@ -1,6 +1,6 @@
 ﻿# Numerics Python Examples
 
-This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. The goal is to provide practical, reproducible examples for distributions, MCMC, optimization, statistics, time series, machine learning, and linear models.
+This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. The notebooks provide practical, reproducible examples of Numerics applications, including distribution fitting, MCMC, optimization, statistical analysis, time series analysis, machine learning, and linear model fitting.
 
 ## Contents
 - `notebooks/` Jupyter notebooks organized by topic
@@ -23,14 +23,52 @@ This repository contains Python notebooks that demonstrate the Numerics .NET lib
 
 ## Prerequisites
 - Windows with .NET installed (or .NET 6+ runtime on Linux/macOS)
-- Python with pythonnet
-- Numerics built locally so the DLL exists at the path used in notebooks
+- Python with [pythonnet](https://github.com/pythonnet/pythonnet)
+- Numerics built and compiled locally. The resulting DLL path must match the path referenced in the notebooks — see Quick Start and/or notebook 00 for setup instructions.
 
 ## Quick Start
-1. Create and activate a Python environment.
-2. Install notebook requirements: `pip install -r notebook-requirements.txt`.
-3. Build Numerics and confirm the DLL path matches what the notebooks expect.
-4. Open notebooks in Jupyter or VS Code and run cells top to bottom.
+The quick start will step through the creation of an active python environment, installing the notebook requirements & RMC-Numerics, and getting the methods ready to be used. For a more in depth walk through see notebook 00.
+**NOTE:** This set up is geared towards Windows users. For other operating systems see notebook 00.
+
+1. Create and activate a virtual Python environment
+```bash
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install ipykernel
+python -m ipykernel install --user --name=.venv --display-name "Python (.venv)"
+```
+
+2. Install notebook requirements 
+```bash
+pip install -r notebook-requirements.txt
+```
+
+3. Install and build Numerics
+```bash
+git clone https://github.com/USACE-RMC/Numerics.git
+cd Numerics
+dotnet build Numerics.sln --configuration Release
+```
+
+4. Load and confirm the DLL path
+```bash
+import pythonnet
+pythonnet.load("coreclr")
+
+import clr 
+from pathlib import Path 
+
+# Path to your Numerics.dll
+# MODIFY THIS PATH to make your installation
+dll_path = Path(r"C:\GIT\Numerics\Numerics\bin\Debug\net8.0\Numerics.dll")
+clr.AddReference(str(dll_path))
+```
+
+5. Create a Normal Distribution
+```bash
+from Numerics.Distributions import Normal
+dist = Normal(100,15)
+```
 
 ## Notes
 - These notebooks compare Numerics to common Python libraries where relevant. When comparing MCMC chains, align warmup/thinning settings.
