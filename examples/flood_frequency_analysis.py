@@ -2,6 +2,7 @@
 and tables will be output to the terminal.
 """
 
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -13,12 +14,28 @@ pythonnet.load("coreclr")
 import clr
 
 
+def _resolve_numerics_dll():
+    """Resolve Numerics.dll from NUMERICS_DLL env var, the NuGet cache, or a local packages/ folder."""
+    env = os.environ.get("NUMERICS_DLL")
+    if env:
+        return Path(env)
+    cache = Path.home() / ".nuget" / "packages" / "rmc.numerics"
+    if cache.exists():
+        hits = sorted(cache.glob("*/lib/net8.0/Numerics.dll"), reverse=True)
+        if hits:
+            return hits[0]
+    for root in (Path.cwd(), Path(__file__).parent.parent):
+        local = sorted((root / "packages").glob("RMC.Numerics.*/lib/net8.0/Numerics.dll"), reverse=True)
+        if local:
+            return local[0]
+    raise FileNotFoundError(
+        "Numerics DLL not found. Install via `dotnet add package RMC.Numerics --version 2.0.1` "
+        "or set the NUMERICS_DLL environment variable."
+    )
+
+
 def load_numerics():
-    dll_path = Path(r"C:\GIT\Numerics\Numerics\bin\Debug\net8.0\Numerics.dll")
-    if not dll_path.exists():
-        raise FileNotFoundError(
-            f"Numerics DLL not found at {dll_path}. Update `dll_path` in this script."
-        )
+    dll_path = _resolve_numerics_dll()
     clr.AddReference(str(dll_path))
 
 

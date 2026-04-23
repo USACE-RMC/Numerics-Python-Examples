@@ -402,6 +402,12 @@ FodyWeavers.xsd
 !.vscode/launch.json
 !.vscode/*.code-snippets
 
+# Claude Code session state
+.claude/
+
+# Local NuGet package install location (populated by `nuget install -OutputDirectory packages`)
+packages/
+
 # Local History for Visual Studio Code
 .history/
 
