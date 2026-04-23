@@ -3,6 +3,7 @@ This file takes approximately 5 minutes to run. Once it is complete you will hav
 and tables will be output to the terminal.
 """
 
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -14,12 +15,29 @@ pythonnet.load("coreclr")
 import clr
 
 
+def _resolve_numerics_dll():
+    """Resolve Numerics.dll from NUMERICS_DLL env var, the NuGet cache, or a local packages/ folder."""
+    env = os.environ.get("NUMERICS_DLL")
+    if env:
+        return Path(env)
+    cache = Path.home() / ".nuget" / "packages" / "rmc.numerics"
+    if cache.exists():
+        hits = sorted(cache.glob("*/lib/net8.0/Numerics.dll"), reverse=True)
+        if hits:
+            return hits[0]
+    for root in (Path.cwd(), Path(__file__).parent.parent):
+        local = sorted((root / "packages").glob("RMC.Numerics.*/lib/net8.0/Numerics.dll"), reverse=True)
+        if local:
+            return local[0]
+    raise FileNotFoundError(
+        "Numerics DLL not found. Install via `dotnet add package RMC.Numerics` "
+        "(pulls latest; append `--version 2.0.1` to pin) or set the NUMERICS_DLL "
+        "environment variable."
+    )
+
+
 def load_numerics():
-    dll_path = Path(r"C:\GIT\Numerics\Numerics\bin\Debug\net8.0\Numerics.dll")
-    if not dll_path.exists():
-        raise FileNotFoundError(
-            f"Numerics DLL not found at {dll_path}. Update `dll_path` in this script."
-        )
+    dll_path = _resolve_numerics_dll()
     clr.AddReference(str(dll_path))
 
 
@@ -29,21 +47,13 @@ def main(seed=123):
     from Numerics.Distributions import IUnivariateDistribution, Normal, Uniform
     from Numerics.Sampling.MCMC import DEMCzs, LogLikelihood, MCMCResults
     from System.Collections.Generic import List
-    from System.Threading import ThreadPool
-    import os
-    
-    ''' NOTE FOR DEMO USERS:
-    When calling Numerics MCMC samplers from Python via pythonnet, the samplers'
-    internal parallel chains (Parallel.For) contend for Python's Global Interpreter
-    Lock (GIL). This makes parallel execution slower than sequential. Setting
-    max thread pool workers to 1 forces sequential execution and removes that
-    overhead. In pure C#, you can remove this line and parallelism will work as
-    intended. 
 
-    This is also why we set sampler.ParallelizeChains = False for every example.
-    It defaults to True, which works well in C#, but it slows the sampler down 
-    in Python'''
-    ThreadPool.SetMaxThreads(1, 1)  # (workerThreads, completionPortThreads)
+    # NOTE FOR DEMO USERS:
+    # When calling Numerics MCMC samplers from Python via pythonnet, the samplers'
+    # internal parallel chains (Parallel.For) contend for Python's Global Interpreter
+    # Lock (GIL). This makes parallel execution slower than sequential. This is why
+    # we set sampler.ParallelizeChains = False below. It defaults to True, which
+    # works well in C#, but it slows the sampler down when driven from Python.
 
     x = np.linspace(0, 10, 80)
     true_a, true_b, true_sigma = 2.0, 1.4, 1.2

@@ -37,9 +37,9 @@ Given the life-safety applications of Numerics, which this demo is an extension 
 Pull requests may take several weeks or longer to review. Before submitting code:
 
 1. **Open an issue first** to discuss the proposed change
-2. **Follow the coding standards**, including XML documentation on all public types and members
-3. **Include unit tests** that validate against known results (R, SciPy, Mathematica, or published tables)
-5. **Ensure a clean build** with zero errors and zero warnings
+2. **Follow PEP 8** and add docstrings to new functions and modules; clear notebook outputs before submitting (`jupyter nbconvert --clear-output --inplace notebooks/*.ipynb`)
+3. **Include validation** against known results (R, SciPy, Mathematica, or published tables) where applicable
+4. **Ensure notebooks run end to end** without errors in a fresh virtual environment
 
 ## Developer Certificate of Origin
 

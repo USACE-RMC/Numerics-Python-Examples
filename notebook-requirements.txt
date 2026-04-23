@@ -1,3 +1,17 @@
+# Python requirements for the notebooks + example scripts.
+#
+# Install with:    pip install -r notebook-requirements.txt
+#
+# In addition to these Python packages, the notebooks need the RMC.Numerics
+# .NET assembly. Install the NuGet package (pip WILL NOT fetch it):
+#   dotnet add package RMC.Numerics
+#     -- or --
+#   nuget install RMC.Numerics -OutputDirectory packages
+# Both commands pull the latest version by default; append `--version 2.0.1`
+# (dotnet) or `-Version 2.0.1` (nuget) to pin the version this demo was built
+# against. The notebooks auto-discover the DLL via
+# helper_functions.resolve_numerics_dll().
+
 pythonnet>=3.0.0
 numpy>=1.24.0
 pandas>=2.0.0
@@ -9,5 +23,5 @@ jupyter>=1.0.0
 ipykernel>=6.0.0
 ipython>=8.0.0
 
-# One-shot install command for everything in this folder:
+# One-shot install command for everything in this file:
 # pip install pythonnet>=3.0.0 numpy>=1.24.0 pandas>=2.0.0 matplotlib>=3.7.0 scipy>=1.10.0 scikit-learn>=1.3.0 pymc>=5.0.0 jupyter>=1.0.0 ipykernel>=6.0.0 ipython>=8.0.0

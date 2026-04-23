@@ -398,11 +398,22 @@ FodyWeavers.xsd
 
 # VS Code files for those working on multiple tools
 .vscode/*
-!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-!.vscode/extensions.json
 !.vscode/*.code-snippets
+
+# Claude Code session state
+.claude/
+
+# Local NuGet package install location (populated by `nuget install -OutputDirectory packages`)
+packages/
+
+# Python virtual environments
+.venv/
+venv/
+
+# Jupyter checkpoint snapshots
+**/.ipynb_checkpoints/
 
 # Local History for Visual Studio Code
 .history/

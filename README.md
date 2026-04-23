@@ -1,4 +1,4 @@
-﻿# Numerics Python Examples
+# Numerics Python Examples
 
 This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. The notebooks provide practical, reproducible examples of Numerics applications, including distribution fitting, MCMC, optimization, statistical analysis, time series analysis, machine learning, and linear model fitting.
 
@@ -22,60 +22,86 @@ This repository contains Python notebooks that demonstrate the Numerics .NET lib
 - `12_linear_models.ipynb` Linear/GLM workflows
 
 ## Prerequisites
-- Windows with .NET installed (or .NET 6+ runtime on Linux/macOS)
-- Python with [pythonnet](https://github.com/pythonnet/pythonnet)
-- Numerics built and compiled locally. The resulting DLL path must match the path referenced in the notebooks — see Quick Start and/or notebook 00 for setup instructions.
+- Python **3.10–3.13** recommended. pythonnet does not yet support Python 3.14.
+- .NET 6+ runtime (or .NET Framework 4.8.1 on Windows). Install the [.NET SDK](https://dotnet.microsoft.com/download) if you don't already have it.
+- The [RMC.Numerics](https://www.nuget.org/packages/RMC.Numerics) NuGet package (see Quick Start).
 
 ## Quick Start
-The quick start will step through the creation of an active python environment, installing the notebook requirements & RMC-Numerics, and getting the methods ready to be used. For a more in depth walk through see notebook 00.      
-**NOTE:** This set up is geared towards Windows users. For other operating systems see notebook 00.      
+The quick start will walk you through creating a virtual Python environment, installing the notebook requirements, and pulling in the `RMC.Numerics` NuGet package. For a more in-depth walkthrough see notebook [`00_getting_started.ipynb`](notebooks/00_getting_started.ipynb).  
+**NOTE:** The commands below assume Windows. See notebook `00` for macOS/Linux equivalents.
 
 1. Create and activate a virtual Python environment
-```bash
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install ipykernel
-python -m ipykernel install --user --name=.venv --display-name "Python (.venv)"
-```
 
-2. Install notebook requirements 
-```bash
-pip install -r notebook-requirements.txt
-```
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   pip install ipykernel
+   python -m ipykernel install --user --name=.venv --display-name "Python (.venv)"
+   ```
 
-3. Install and build Numerics
+2. Install the Python requirements
+
+   ```bash
+   pip install -r notebook-requirements.txt
+   ```
+
+3. Install the `RMC.Numerics` NuGet package
+
+   ```bash
+   # Option A — global NuGet cache (recommended; requires the .NET SDK):
+   dotnet add package RMC.Numerics
+
+   # Option B — local packages/ folder (requires nuget.exe on PATH):
+   nuget install RMC.Numerics -OutputDirectory packages
+   ```
+
+   Both commands pull the **latest** published version by default. This demo was built against version `2.0.1`; to pin that version, append `--version 2.0.1` (Option A) or `-Version 2.0.1` (Option B).
+
+   The notebooks auto-discover the DLL in either location via `resolve_numerics_dll()` in [`notebooks/helper_functions.py`](notebooks/helper_functions.py).
+
+4. Load Numerics in a notebook or script
+
+   ```python
+   import pythonnet
+   pythonnet.load("coreclr")
+
+   import clr
+   from helper_functions import resolve_numerics_dll
+   clr.AddReference(str(resolve_numerics_dll()))
+   ```
+
+5. Create a Normal distribution
+
+   ```python
+   from Numerics.Distributions import Normal
+   dist = Normal(100, 15)
+   ```
+
+## Using a local Numerics build instead of NuGet
+
+If you prefer to build Numerics from source — for example, to develop against the latest `main` branch — clone the [Numerics](https://github.com/USACE-RMC/Numerics) repo and build it:
+
 ```bash
 git clone https://github.com/USACE-RMC/Numerics.git
 cd Numerics
 dotnet build Numerics.sln --configuration Release
 ```
 
-4. Load and confirm the DLL path
-```bash
-import pythonnet
-pythonnet.load("coreclr")
+Then point the notebooks at your build by setting the `NUMERICS_DLL` environment variable before launching Jupyter:
 
-import clr 
-from pathlib import Path 
+```powershell
+# PowerShell
+$env:NUMERICS_DLL = "C:\path\to\Numerics\Numerics\bin\Release\net8.0\Numerics.dll"
 
-# Path to your Numerics.dll
-# MODIFY THIS PATH to make your installation
-dll_path = Path(r"C:\GIT\Numerics\Numerics\bin\Debug\net8.0\Numerics.dll")
-clr.AddReference(str(dll_path))
+# bash / zsh
+export NUMERICS_DLL=/path/to/Numerics/Numerics/bin/Release/net8.0/Numerics.dll
 ```
 
-5. Create a Normal Distribution
-```bash
-from Numerics.Distributions import Normal
-dist = Normal(100,15)
-```
+`resolve_numerics_dll()` uses this variable first, then falls back to the NuGet cache and finally a local `packages/` folder.
 
 ## Notes
 - These notebooks compare Numerics to common Python libraries where relevant. When comparing MCMC chains, align warmup/thinning settings.
 - Many examples use synthetic data to keep results consistent and easy to interpret.
 
-## How To Update DLL Path
-If your Numerics build output is in a different location, update the DLL path in the setup cell of each notebook. Search for `Numerics.dll` and replace the path with your local build output.
-
 ## License
-See the Numerics project license for usage and distribution terms.
+This project is released under the [USACE-RMC license](LICENSE). It is compatible with the parent [Numerics project license](https://github.com/USACE-RMC/Numerics/blob/main/LICENSE).
