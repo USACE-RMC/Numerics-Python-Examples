@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using the information below."
 type: software
 title: "Numerics-Python-Examples"
-version: 0.0.0
-repository-code: 
-date-released: "2026-03-30"
+version: "1.0.0"
+repository-code: "https://github.com/USACE-RMC/Numerics-Python-Examples"
+date-released: "2026-04-23"
 license: BSD-3-Clause
 url: "https://github.com/USACE-RMC/Numerics-Python-Examples.git"
 abstract: >-
@@ -26,9 +26,10 @@ authors:
       affiliation: "U.S. Army Corps of Engineers, Risk Management Center"
       orcid: "https://orcid.org/0009-0008-8588-4816"
     - family-names: "Gonzalez"
-      given-names: "Tiki"
+      given-names: "Julian"
       email: "julian.t.gonzalez@usace.army.mil"
       affiliation: "U.S. Army Corps of Engineers, Risk Management Center"
+      orcid: "https://orcid.org/0009-0009-9058-7653"
     - family-names: "Smith"
       given-names: "C. Haden"
       email: "cole.h.smith@usace.army.mil"
