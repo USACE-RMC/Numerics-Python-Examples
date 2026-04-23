@@ -408,6 +408,10 @@ FodyWeavers.xsd
 # Local NuGet package install location (populated by `nuget install -OutputDirectory packages`)
 packages/
 
+# Python virtual environments
+.venv/
+venv/
+
 # Local History for Visual Studio Code
 .history/
 

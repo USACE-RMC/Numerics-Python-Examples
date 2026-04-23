@@ -45,15 +45,17 @@ The quick start will walk you through creating a virtual Python environment, ins
    pip install -r notebook-requirements.txt
    ```
 
-3. Install the `RMC.Numerics` NuGet package (version `2.0.1`)
+3. Install the `RMC.Numerics` NuGet package
 
    ```bash
    # Option A — global NuGet cache (recommended; requires the .NET SDK):
-   dotnet add package RMC.Numerics --version 2.0.1
+   dotnet add package RMC.Numerics
 
    # Option B — local packages/ folder (requires nuget.exe on PATH):
-   nuget install RMC.Numerics -Version 2.0.1 -OutputDirectory packages
+   nuget install RMC.Numerics -OutputDirectory packages
    ```
+
+   Both commands pull the **latest** published version by default. This demo was built against version `2.0.1`; to pin that version, append `--version 2.0.1` (Option A) or `-Version 2.0.1` (Option B).
 
    The notebooks auto-discover the DLL in either location via `resolve_numerics_dll()` in [`notebooks/helper_functions.py`](notebooks/helper_functions.py).
 

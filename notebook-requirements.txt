@@ -4,10 +4,13 @@
 #
 # In addition to these Python packages, the notebooks need the RMC.Numerics
 # .NET assembly. Install the NuGet package (pip WILL NOT fetch it):
-#   dotnet add package RMC.Numerics --version 2.0.1
+#   dotnet add package RMC.Numerics
 #     -- or --
-#   nuget install RMC.Numerics -Version 2.0.1 -OutputDirectory packages
-# The notebooks auto-discover the DLL via helper_functions.resolve_numerics_dll().
+#   nuget install RMC.Numerics -OutputDirectory packages
+# Both commands pull the latest version by default; append `--version 2.0.1`
+# (dotnet) or `-Version 2.0.1` (nuget) to pin the version this demo was built
+# against. The notebooks auto-discover the DLL via
+# helper_functions.resolve_numerics_dll().
 
 pythonnet>=3.0.0
 numpy>=1.24.0

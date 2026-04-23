@@ -39,9 +39,11 @@ def resolve_numerics_dll():
 
     raise FileNotFoundError(
         "Numerics DLL not found. Install via one of:\n"
-        "  dotnet add package RMC.Numerics --version 2.0.1\n"
-        "  nuget install RMC.Numerics -Version 2.0.1 -OutputDirectory packages\n"
-        "Or set the NUMERICS_DLL environment variable to a local build."
+        "  dotnet add package RMC.Numerics\n"
+        "  nuget install RMC.Numerics -OutputDirectory packages\n"
+        "Both commands pull the latest published version by default; append\n"
+        "  --version 2.0.1 (dotnet) or -Version 2.0.1 (nuget) to pin.\n"
+        "Alternatively set the NUMERICS_DLL environment variable to a local build."
     )
 
 

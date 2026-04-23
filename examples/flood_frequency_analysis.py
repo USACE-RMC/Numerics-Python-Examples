@@ -29,8 +29,9 @@ def _resolve_numerics_dll():
         if local:
             return local[0]
     raise FileNotFoundError(
-        "Numerics DLL not found. Install via `dotnet add package RMC.Numerics --version 2.0.1` "
-        "or set the NUMERICS_DLL environment variable."
+        "Numerics DLL not found. Install via `dotnet add package RMC.Numerics` "
+        "(pulls latest; append `--version 2.0.1` to pin) or set the NUMERICS_DLL "
+        "environment variable."
     )
 
 
