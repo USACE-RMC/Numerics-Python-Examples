@@ -412,6 +412,9 @@ packages/
 .venv/
 venv/
 
+# Jupyter checkpoint snapshots
+**/.ipynb_checkpoints/
+
 # Local History for Visual Studio Code
 .history/
 
