@@ -1,5 +1,5 @@
-"""Reliability analysis demo using Monte Carlo simulation. Once this file runs you will have a popup window of graphs 
-and tables will be ouput to the terminal."""
+"""Reliability analysis demo using Monte Carlo simulation. Once this file runs you will have a popup window of graphs
+and tables will be output to the terminal."""
 
 import math
 import os
