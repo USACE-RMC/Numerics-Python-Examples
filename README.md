@@ -1,6 +1,6 @@
 # Numerics Python Examples
 
-[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![License: 0BSD](https://img.shields.io/badge/License-0BSD-blue.svg)](https://opensource.org/licenses/0BSD)
 [![DOI](https://zenodo.org/badge/1135095276.svg)](https://doi.org/10.5281/zenodo.19715583)
 
 This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. The notebooks provide practical, reproducible examples of Numerics applications, including distribution fitting, MCMC, optimization, statistical analysis, time series analysis, machine learning, and linear model fitting.
@@ -107,4 +107,4 @@ export NUMERICS_DLL=/path/to/Numerics/Numerics/bin/Release/net8.0/Numerics.dll
 - Many examples use synthetic data to keep results consistent and easy to interpret.
 
 ## License
-This project is released under the [USACE-RMC license](LICENSE). It is compatible with the parent [Numerics project license](https://github.com/USACE-RMC/Numerics/blob/main/LICENSE).
+This project is released under the [Zero-Clause BSD (0BSD) license](LICENSE).
