@@ -5,7 +5,7 @@ title: "Numerics-Python-Examples"
 version: "1.0.0"
 repository-code: "https://github.com/USACE-RMC/Numerics-Python-Examples"
 date-released: "2026-04-23"
-license: BSD-3-Clause
+license: 0BSD
 url: "https://github.com/USACE-RMC/Numerics-Python-Examples.git"
 abstract: >-
   This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. 
