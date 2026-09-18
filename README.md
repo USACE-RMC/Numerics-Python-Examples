@@ -5,6 +5,10 @@
 
 This repository contains Python notebooks that demonstrate the Numerics .NET library through pythonnet. The notebooks provide practical, reproducible examples of Numerics applications, including distribution fitting, MCMC, optimization, statistical analysis, time series analysis, machine learning, and linear model fitting.
 
+Next release: **v1.0.1** (not yet published). This is the examples repository's
+version; its Numerics dependency is **RMC.Numerics 2.2.0**, running on **.NET 10**.
+See the [release notes](CHANGELOG.md) and [citation metadata](CITATION.cff).
+
 ## Contents
 - `notebooks/` Jupyter notebooks organized by topic
 - `examples/` Focused scripts and end-to-end demos
@@ -134,7 +138,7 @@ are kept under ignored `artifacts/validation/`. The release output exception in
 [CONTRIBUTING](CONTRIBUTING.md) applies to notebooks 00, 05, 06, and 11; the other
 notebooks retain source only. Use `--schema-only` for a quick structural check.
 
-See the [2.2 reference validation report](docs/validation/2026-09-18-numerics-2.2-validation.md)
+See the [v1.0.1 reference validation report](docs/validation/2026-09-18-numerics-2.2-validation.md)
 for the measured environment, results, and limitations.
 
 ## License
