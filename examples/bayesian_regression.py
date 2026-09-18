@@ -3,42 +3,15 @@ This file takes approximately 5 minutes to run. Once it is complete you will hav
 and tables will be output to the terminal.
 """
 
-import os
 from pathlib import Path
+import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import pythonnet
 
-pythonnet.load("coreclr")
-import clr
-
-
-def _resolve_numerics_dll():
-    """Resolve Numerics.dll from NUMERICS_DLL env var, the NuGet cache, or a local packages/ folder."""
-    env = os.environ.get("NUMERICS_DLL")
-    if env:
-        return Path(env)
-    cache = Path.home() / ".nuget" / "packages" / "rmc.numerics"
-    if cache.exists():
-        hits = sorted(cache.glob("*/lib/net8.0/Numerics.dll"), reverse=True)
-        if hits:
-            return hits[0]
-    for root in (Path.cwd(), Path(__file__).parent.parent):
-        local = sorted((root / "packages").glob("RMC.Numerics.*/lib/net8.0/Numerics.dll"), reverse=True)
-        if local:
-            return local[0]
-    raise FileNotFoundError(
-        "Numerics DLL not found. Install via `dotnet add package RMC.Numerics` "
-        "(pulls latest; append `--version 2.0.1` to pin) or set the NUMERICS_DLL "
-        "environment variable."
-    )
-
-
-def load_numerics():
-    dll_path = _resolve_numerics_dll()
-    clr.AddReference(str(dll_path))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "notebooks"))
+from helper_functions import load_numerics
 
 
 def main(seed=123):

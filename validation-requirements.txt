@@ -1,0 +1,4 @@
+-r notebook-requirements.txt
+nbformat>=5.10,<6
+nbclient>=0.10,<1
+pytest>=8,<10
