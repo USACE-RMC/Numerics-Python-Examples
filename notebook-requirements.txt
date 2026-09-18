@@ -2,15 +2,14 @@
 #
 # Install with:    pip install -r notebook-requirements.txt
 #
-# In addition to these Python packages, the notebooks need the RMC.Numerics
-# .NET assembly. Install the NuGet package (pip WILL NOT fetch it):
-#   dotnet add package RMC.Numerics
-#     -- or --
-#   nuget install RMC.Numerics -OutputDirectory packages
-# Both commands pull the latest version by default; append `--version 2.0.1`
-# (dotnet) or `-Version 2.0.1` (nuget) to pin the version this demo was built
-# against. The notebooks auto-discover the DLL via
-# helper_functions.resolve_numerics_dll().
+# The examples also require the .NET 10 SDK and the exact RMC.Numerics 2.2.0
+# package. pip does not fetch either dependency. From the repository root run:
+#   dotnet restore dotnet/NumericsRuntime.csproj --configfile NuGet.config --no-cache
+# This uses the checked-in NuGet.org-only source configuration and restores to
+# the project-local packages/ folder. helper_functions.load_numerics() then
+# configures .NET 10 and preflights the assembly name/version before loading.
+# Target-framework validation occurs after loading; a rejected target-framework
+# override requires restarting Python before selecting another Numerics DLL.
 
 pythonnet>=3.0.0
 numpy>=1.24.0
@@ -18,10 +17,11 @@ pandas>=2.0.0
 matplotlib>=3.7.0
 scipy>=1.10.0
 scikit-learn>=1.3.0
-pymc>=5.0.0
+pymc>=5.0.0,<6
+arviz>=0.21.0,<1
 jupyter>=1.0.0
 ipykernel>=6.0.0
 ipython>=8.0.0
 
 # One-shot install command for everything in this file:
-# pip install pythonnet>=3.0.0 numpy>=1.24.0 pandas>=2.0.0 matplotlib>=3.7.0 scipy>=1.10.0 scikit-learn>=1.3.0 pymc>=5.0.0 jupyter>=1.0.0 ipykernel>=6.0.0 ipython>=8.0.0
+# pip install -r notebook-requirements.txt

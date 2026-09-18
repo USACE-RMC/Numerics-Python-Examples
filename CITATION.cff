@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using the information below."
 type: software
 title: "Numerics-Python-Examples"
-version: "1.0.0"
+version: "1.0.1"
 repository-code: "https://github.com/USACE-RMC/Numerics-Python-Examples"
-date-released: "2026-04-23"
+# Add date-released when v1.0.1 is published; do not reuse the v1.0.0 date.
 license: 0BSD
 url: "https://github.com/USACE-RMC/Numerics-Python-Examples.git"
 abstract: >-

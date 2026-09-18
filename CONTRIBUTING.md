@@ -41,6 +41,13 @@ Pull requests may take several weeks or longer to review. Before submitting code
 3. **Include validation** against known results (R, SciPy, Mathematica, or published tables) where applicable
 4. **Ensure notebooks run end to end** without errors in a fresh virtual environment
 
+Release maintainers may retain refreshed outputs for setup, diagnostic, and
+benchmark notebooks when updating a library release. These outputs must come
+from a complete successful run with the documented package/runtime environment,
+include benchmark settings and timing methodology, and contain no error outputs,
+machine-specific paths, transient progress bars, or unrelated kernel metadata.
+Ordinary editorial changes should still clear incidental execution outputs.
+
 ## Developer Certificate of Origin
 
 By submitting a pull request, you certify under the [Developer Certificate of Origin (DCO) Version 1.1](https://developercertificate.org/) that you have the right to submit the work under the license associated with this project and that you agree to the DCO.
